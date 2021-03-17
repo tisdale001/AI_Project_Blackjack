@@ -216,7 +216,7 @@ class blackJack():
                 if i == len(playerHand) - 1:
                     betAmount = playerHand[i]
                 else:
-                    playerStr += str(playerHand[i].getValue()) + ' '
+                    playerStr += str(playerHand[i].getName()) + ' '
             playerStr += '      '
         print(playerStr)
         playerTotalStr = ''
@@ -403,7 +403,3 @@ class blackJack():
             
         return
 
-def main():
-    blackJack(2, 1000000)
-
-main()
