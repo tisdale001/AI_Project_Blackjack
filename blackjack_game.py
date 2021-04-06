@@ -74,6 +74,10 @@ class deckOfCards():
 ##        # stack deck for testing
 ##        for i in range(6):
 ##            finalDeck.append(card('2', 2))
+##        finalDeck.append(card('A', 11))
+##        finalDeck.append(card('J', 10))
+##        finalDeck.append(card('2', 2))
+##        finalDeck.append(card('2', 2))
             
         return finalDeck
 
@@ -317,7 +321,7 @@ class blackJack():
                 print('Shuffling....')
                 self.deck = deckOfCards(1)
             #print('Place bet....')
-            self.betAmount = self.player.betAmount()
+            self.betAmount = self.player.betAmount
             while self.betAmount > self.money:
                 print('You cannot bet more money than you have.')
                 self.betAmount = player.betAmount()
@@ -340,7 +344,13 @@ class blackJack():
                     print('Dealer has Blackjack.')
                     self.dealerDealtCards = []
                     self.playerHandList = [] 
-                    
+            # check player blackjack
+            elif card1.getValue() + card2.getValue() == 21:
+                self.money += self.betAmount
+                self.showDealerHand([[card1, card2, self.betAmount]])
+                print('Player has Blackjack!')
+                self.dealerDealtCards = []
+                self.playerHandList = []
             else:
                 # play hand
                 if card1.getName() == card2.getName():

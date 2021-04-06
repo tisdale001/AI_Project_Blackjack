@@ -33,7 +33,9 @@ class player1BlackJack():
         """
         Returns integer.
         """
-        x = input('Enter bet amount.')
+        x = input('(ENTER for default.) Enter bet amount.')
+        if x == '':
+            return 10
         try:
             y = int(x)
         except:
