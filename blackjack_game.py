@@ -321,7 +321,7 @@ class blackJack():
                 print('Shuffling....')
                 self.deck = deckOfCards(1)
             #print('Place bet....')
-            self.betAmount = self.player.betAmount
+            self.betAmount = self.player.betAmount()
             while self.betAmount > self.money:
                 print('You cannot bet more money than you have.')
                 self.betAmount = player.betAmount()
