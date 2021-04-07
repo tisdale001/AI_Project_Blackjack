@@ -104,6 +104,10 @@ class blackJack():
         self.player = player
         self.money = startMoney
         self.betAmount = 0
+        self.number_of_wins = 0
+        self.number_of_loses = 0
+        self.number_of_draws = 0
+        self.number_of_blackjacks = 0
         self.playBlackJack()
         
     def playHand(self, card1, card2, dealerUpCard):
@@ -321,10 +325,10 @@ class blackJack():
                 print('Shuffling....')
                 self.deck = deckOfCards(1)
             #print('Place bet....')
-            self.betAmount = self.player.betAmount()
+            self.betAmount = self.player.betAmount
             while self.betAmount > self.money:
                 print('You cannot bet more money than you have.')
-                self.betAmount = player.betAmount()
+                self.betAmount = self.player.betAmount()
             self.dealerHoleCard = self.deck.dealCard()
             self.dealerUpCard = self.deck.dealCard()
             card1 = self.deck.dealCard()
@@ -337,13 +341,15 @@ class blackJack():
                     self.showDealerHand([[card1, card2, self.betAmount]])
                     print('Push.')
                     self.dealerDealtCards = []
-                    self.playerHandList = [] 
+                    self.playerHandList = []
+                    self.number_of_draws += 1
                 else:
                     self.money -= self.betAmount
                     self.showDealerHand([[card1, card2, self.betAmount]])
                     print('Dealer has Blackjack.')
                     self.dealerDealtCards = []
-                    self.playerHandList = [] 
+                    self.playerHandList = []
+                    self.number_of_loses += 1
             # check player blackjack
             elif card1.getValue() + card2.getValue() == 21:
                 self.money += self.betAmount
@@ -351,6 +357,8 @@ class blackJack():
                 print('Player has Blackjack!')
                 self.dealerDealtCards = []
                 self.playerHandList = []
+                self.number_of_wins += 1
+                self.number_of_blackjacks += 1
             else:
                 # play hand
                 if card1.getName() == card2.getName():
@@ -358,9 +366,9 @@ class blackJack():
                     if self.player.doSplit(card1, card2, self.dealerUpCard):
                         self.playerHandList = self.split(card1, card2, self.dealerUpCard)
                     else:
-                        self.playerHandList = [ self.playHand(card1, card2, self.dealerUpCard) ]
+                        self.playerHandList = [self.playHand(card1, card2, self.dealerUpCard)]
                 else:
-                    self.playerHandList = [ self.playHand(card1, card2, self.dealerUpCard) ]
+                    self.playerHandList = [self.playHand(card1, card2, self.dealerUpCard)]
                     
                 # evaluate hands and award bets
                 dealerHandList = self.playDealer(self.playerHandList)
@@ -388,22 +396,28 @@ class blackJack():
                         if totalHand > 21:
                             # Push
                             push = True
+                            self.number_of_draws += 1
                         else:
                             # Win
                             self.money += totalBet
+                            self.number_of_wins += 1
                     else:
                         if totalHand > 21:
                             #Bust--Lose
                             self.money -= totalBet
+                            self.number_of_loses += 1
                         elif totalHand == dealerHandTotal:
                             #Push
                             push = True
+                            self.number_of_draws += 1
                         elif totalHand < dealerHandTotal:
                             #Lose
                             self.money -= totalBet
+                            self.number_of_loses += 1
                         elif totalHand > dealerHandTotal:
                             #Win
                             self.money += totalBet
+                            self.number_of_wins += 1
 
                 # Hand is over
                 self.showDealerHand(self.playerHandList)
