@@ -95,7 +95,7 @@ class deckOfCards():
 class blackJack():
     
     def __init__(self, numHands, startMoney, player = player1BlackJack()):
-        self.deck = deckOfCards(1)
+        self.deck = deckOfCards(5)
         self.dealerUpCard = None
         self.dealerHoleCard = None
         self.dealerDealtCards = []

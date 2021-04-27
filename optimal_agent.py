@@ -7,7 +7,7 @@ is based of black jack basic strategy.
 class OptimalAgent:
 
     def __init__(self):
-        self.betAmount = 100
+        self.betAmount = 10
         self.split_count = 0
 
     def hitStayOrDoubleDown(self, playerCardList, dealerUpCard):
